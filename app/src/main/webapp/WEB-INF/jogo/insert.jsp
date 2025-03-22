@@ -10,28 +10,29 @@
     </head>
     <body>
         <div class="container">
-            <h1>Novo Jogo Jogo</h1>
+            <h1>Novo Jogo</h1>
             <form action="/jogo/insert" method="post">
                 <div class = "form-group">
                     <label for="titulo">Título:</label>
-                    <input type="text" id="titulo" name="titulo" class="form-control"/>
+                    <input type="text" name="titulo" class="form-control"/>
                 </div>
-            <div class="form-group">
-                <label for="categoria">Categoria:</label>
-                <select name="categoria" class="form-select">
-                    <c:forEach var="c" items="${categorias}">
-                        <option value="${c.id}">${c.nome}</option>
+                <div class="form-group">
+                    <label for="categoria">Categoria:</label>
+                    <select name="categoria" class="form-select">
+                        <c:forEach var="c" items="${categorias}">
+                            <option value="${c.id}">${c.nome}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="plataforma">Plataformas:</label>
+                    <c:forEach var="plataforma" items="${plataformas}">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="plataformas" value="${p.id}" id="${p.id}"/>
+                        <label class="custom-control-label" for="${p.id}">${p.nome}</label>
+                    </div>
                     </c:forEach>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="plataforma">Plataformas:</label>
-                <c:forEach var="plataforma" items="${plataformas}">
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="plataformas" value="${p.id}" id="${p.id}"/>
-                    <label class="custom-control-label" for="${p.id}">${p.nome}</label>
                 </div>
-                </c:forEach>
                 <br />
                 <a href="/jogos/list" class="btn btn-primary">Voltar</a>
                 <button type="submit" class="btn btn-success">Salvar</button>

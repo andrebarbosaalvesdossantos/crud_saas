@@ -72,14 +72,13 @@ public class JogoController {
     public String update(
         @RequestParam("id") long id,
         Model ui){
-            Optional <Jogo> jogo = jogoRepo.findById(id);
-            
-            if(jogo.isPresent()){
-                ui.addAttribute("jogo", jogo.get());
-                ui.addAttribute("categorias", categoriaRepo.findAll());
-                ui.addAttribute("plataformas", plataformaRepo.findAll());
-                return "jogo/update";
-            }
+        Optional <Jogo> jogo = jogoRepo.findById(id);
+        if(jogo.isPresent()){
+            ui.addAttribute("jogo", jogo.get());
+            ui.addAttribute("categorias", categoriaRepo.findAll());
+            ui.addAttribute("plataformas", plataformaRepo.findAll());
+            return "jogo/update";
+        }
         return "redirect:/jogo/list";
     }
 
@@ -90,38 +89,35 @@ public class JogoController {
         @RequestParam("categoria") long idCategoria,
         @RequestParam("plataformas") long[] idsPlataformas){
     
-            Optional <Jogo> jogo = jogoRepo.findById(id);
-            if(jogo.isPresent()){
-                jogo.get().setTitulo(titulo);
-                jogo.get().setCategoria(categoriaRepo.findById(idCategoria).get());
-                Set<Plataforma> updatePlataforma = new HashSet<>();
-                for(long p: idsPlataformas){
-                    Optional<Plataforma> plataforma = plataformaRepo.findById(p);
-                    if(plataforma.isPresent()){
-                        updatePlataforma.add(plataforma.get());
-                    }
+        Optional <Jogo> jogo = jogoRepo.findById(id);
+        if(jogo.isPresent()){
+            jogo.get().setTitulo(titulo);
+            jogo.get().setCategoria(categoriaRepo.findById(idCategoria).get());
+            Set<Plataforma> updatePlataforma = new HashSet<>();
+            for(long p: idsPlataformas){
+                Optional<Plataforma> plataforma = plataformaRepo.findById(p);
+                if(plataforma.isPresent()){
+                    updatePlataforma.add(plataforma.get());
                 }
-                jogo.get().setPlataformas(updatePlataforma);
-                jogoRepo.save(jogo.get());
             }
-            return "redirect:/jogo/list";
+            jogo.get().setPlataformas(updatePlataforma);
+            jogoRepo.save(jogo.get());
         }
+        return "redirect:/jogo/list";
+    }
 
         
-@RequestMapping("/delete")
-public String delete(
- @RequestParam("id") long id,
- Model ui)    
-
-{
-    Optional<Jogo> jogo = jogoRepo.findById(id);
-    if(jogo.isPresent()){
-        ui.addAttribute("jogo", jogo.get());
-        return "jogo/delete";
+    @RequestMapping("/delete")
+    public String delete(
+        @RequestParam("id") long id,
+        Model ui) {
+        Optional<Jogo> jogo = jogoRepo.findById(id);
+        if(jogo.isPresent()){
+            ui.addAttribute("jogo", jogo.get());
+            return "jogo/delete";
+        }
+        return "redirect:/jogo/list";
     }
-    return "redirect:/jogo/list";
-    
-}
     
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String delete(@RequestParam("id") long id) {

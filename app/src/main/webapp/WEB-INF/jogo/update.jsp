@@ -33,7 +33,7 @@
                     </div>
                     </c:forEach>
                 </div>
-                <br/>
+                <br />
                 <a href="/jogo/list" class="btn btn-primary">Voltar</a>
                 <button type="submit" class="btn btn-success">Salvar</button>
             </form>
